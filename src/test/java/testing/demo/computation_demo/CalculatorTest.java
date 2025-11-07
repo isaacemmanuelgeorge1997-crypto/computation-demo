@@ -49,23 +49,6 @@ public class CalculatorTest {
 		);
 	}
 
-	// ---------- Multiplication ----------
-	@ParameterizedTest(name = "{0} * {1} = {2}")
-	@DisplayName("Multiply two numbers")
-	@MethodSource("provideMultiplyData")
-	public void multiply_twoNumbers(int input1, int input2, int expected) {
-		int result = calculator.multiply(input1, input2);
-		assertEquals(expected, result);
-	}
-	static Stream<Arguments> provideMultiplyData() {
-		return Stream.of(
-			Arguments.of(100, 2, 200),
-			Arguments.of(100, -2, -200),
-			Arguments.of(-100, 2, -200),
-			Arguments.of(-100, -2, 200)
-		);
-	}
-
 	// ---------- Subtraction ----------
 	@ParameterizedTest(name = "{0} - {1} = {2}")
 	@DisplayName("Subtract two numbers")
@@ -83,9 +66,43 @@ public class CalculatorTest {
 		);
 	}
 
+	// ---------- Multiplication ----------
+	@ParameterizedTest(name = "{0} * {1} = {2}")
+	@DisplayName("Multiply two numbers")
+	@MethodSource("provideMultiplyData")
+	public void multiply_twoNumbers(int input1, int input2, int expected) {
+		int result = calculator.multiply(input1, input2);
+		assertEquals(expected, result);
+	}
+	static Stream<Arguments> provideMultiplyData() {
+		return Stream.of(
+			Arguments.of(100, 2, 200),
+			Arguments.of(100, -2, -200),
+			Arguments.of(-100, 2, -200),
+			Arguments.of(-100, -2, 200)
+		);
+	}
+
+	// ---------- Division ----------
+	@ParameterizedTest(name = "{0} / {1} = {2}")
+	@DisplayName("Divide two numbers")
+	@MethodSource("provideDivideData")
+	public void divide_twoNumbers(int input1, int input2, int expected) {
+		int result = calculator.divide(input1, input2);
+		assertEquals(expected, result);
+	}
+	static Stream<Arguments> provideDivideData() {
+		return Stream.of(
+			Arguments.of(10, 2, 5),
+			Arguments.of(-10, 2, -5),
+			Arguments.of(10, -2, -5),
+			Arguments.of(-10, -2, 5)
+		);
+	}
+
 	// ---------- Division by Zero ----------
 	@Test
-	@DisplayName("divide_byZero()")
+	@DisplayName("Divide by zero should throw exception")
 	public void divide_byZero() {		
 		assertThrows(IllegalArgumentException.class, () -> calculator.divide(10, 0));
 	}
